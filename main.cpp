@@ -63,10 +63,11 @@ void render()
 
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 255);
 
-        SDL_RenderPresent(renderer);
+    SDL_RenderPresent(renderer);
 }
 
-using std::cout, std::endl;
+using std::cout;
+using std::endl;
 
 int main(int argc, char *argv[])
 {

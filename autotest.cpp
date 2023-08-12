@@ -13,7 +13,8 @@ SDL_Color color;
 
 TTF_Font *font;
 
-using std::cerr, std::endl;
+using std::cerr;
+using std::endl;
 
 int main()
 {
