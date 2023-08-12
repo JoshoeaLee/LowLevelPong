@@ -13,6 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Debug Info
+      run: |
+        echo "Current directory: $PWD"
+        echo "Contents of the 'lib' directory:"
+        ls -R lib
+        echo "Contents of the 'include' directory:"
+        ls -R include
     - name: Install SDL2, SDL2_image, and SDL2_ttf
       run: |
         sudo apt-get update
