@@ -6,6 +6,7 @@
 
 #define WIDTH 800
 #define HEIGHT 800
+#define FONT_PATH "Minecraft.ttf"
 #define FONT_SIZE 32
 
 SDL_Renderer *renderer;
@@ -85,7 +86,7 @@ int main(int argc, char *argv[])
         cout << "Failed at TTF_Init()" << endl;
     }
 
-    font = TTF_OpenFont("Peepo.ttf", FONT_SIZE);
+    font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
     if (font == NULL)
     {

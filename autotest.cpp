@@ -4,7 +4,7 @@
 
 #define WIDTH 800
 #define HEIGHT 800
-#define FONT_PATH "Peepo.ttf"
+#define FONT_PATH "Minecraft.ttf"
 #define FONT_SIZE 32
 
 SDL_Renderer *renderer;
