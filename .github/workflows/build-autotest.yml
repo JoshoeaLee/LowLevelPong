@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: List Files in Working Directory
+      run: ls -R $GITHUB_WORKSPACE
     - name: Install SDL2, SDL2_image, and SDL2_ttf
       run: |
         sudo apt-get update
