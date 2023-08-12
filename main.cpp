@@ -72,26 +72,11 @@ using std::endl;
 
 int main(int argc, char *argv[])
 {
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-    {
-        cout << "Failed at SDL_Init()" << endl;
-    }
+    SDL_Init(SDL_INIT_EVERYTHING);
 
-    if (SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, 0, &window, &renderer) < 0)
-    {
-        cout << "Failed at SDL_CreateWindowAndRenderer()" << endl;
-    }
-    if (TTF_Init() < 0)
-    {
-        cout << "Failed at TTF_Init()" << endl;
-    }
-
+    SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, 0, &window, &renderer);
+    TTF_Init();
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
-
-    if (font == NULL)
-    {
-        cout << "Invalid font being used" << endl;
-    }
 
     running = 1;
 
