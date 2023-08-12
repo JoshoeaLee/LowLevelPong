@@ -13,6 +13,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Print Compiler Version
+      run: |
+        clang++ --version
+    - name: Print System Architecture
+      run: |
+        uname -m
+    - name: Print Environment Variables
+      run: |
+        printenv
     - name: Debug Info
       run: |
         echo "Current directory: $PWD"
