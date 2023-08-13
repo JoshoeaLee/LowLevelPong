@@ -25,5 +25,5 @@ jobs:
           sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
       - name: Build and run tests
         run: |
-          make autotest CXX=g++ EXTRA_FLAGS=-v
+          make autotest EXTRA_FLAGS=-v
           ./run_tests
