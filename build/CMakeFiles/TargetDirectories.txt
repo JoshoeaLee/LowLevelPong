@@ -1,4 +1,0 @@
-/Users/joshualee/Code/C++/Games/LowLevelPong/build/CMakeFiles/play.dir
-/Users/joshualee/Code/C++/Games/LowLevelPong/build/CMakeFiles/run_tests.dir
-/Users/joshualee/Code/C++/Games/LowLevelPong/build/CMakeFiles/edit_cache.dir
-/Users/joshualee/Code/C++/Games/LowLevelPong/build/CMakeFiles/rebuild_cache.dir
