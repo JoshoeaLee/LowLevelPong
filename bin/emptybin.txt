@@ -1,0 +1,1 @@
+So apparently I need a bin folder or else CMake files freak out
