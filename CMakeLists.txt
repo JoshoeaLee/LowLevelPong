@@ -6,10 +6,6 @@ project(LowLevelPong)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find the required packages paths
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${CMAKE_SOURCE_DIR}/lib/cmake/SDL2")
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${CMAKE_SOURCE_DIR}/lib/cmake/SDL2_image")
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${CMAKE_SOURCE_DIR}/lib/cmake/SDL2_ttf")
 # Find the required packages
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
