@@ -17,10 +17,17 @@ jobs:
     - name: Set up CMake
       run: sudo apt-get -y install cmake
 
-    - name: Build project
-      run: |
-        mkdir build
-        cd build
-        cmake -DSDL2_LIBRARY=../lib/libSDL2.dylib -DSDL2_TTF_LIBRARY=../lib/libSDL2_ttf.dylib -DSDL2_IMAGE_LIBRARY=../lib/libSDL2_image.dylib ..
-        make
-        ./run_tests
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DBUILD_EXAMPLES=OFF -DBUILD_FORTRAN_MODULE=OFF -DCMAKE_INSTALL_PREFIX=/home/runner/work/
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config Release
+
+    - name: Run Tests
+      run: ${{github.workspace}}/build/run_tests
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: ${{github.workspace}}/build/test-results
