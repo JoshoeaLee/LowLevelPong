@@ -8,47 +8,19 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up QEMU for ARM64 emulation
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up CMake
+      run: sudo apt-get -y install cmake
+
+    - name: Build project
       run: |
-        sudo apt-get update
-        sudo apt-get install -y qemu-user-static binfmt-support
-        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-        echo "QEMU set up for ARM64 emulation"
-    - name: Print Compiler Version
-      run: |
-        clang++ --version
-    - name: Print System Architecture
-      run: |
-        uname -m
-    - name: Print Environment Variables
-      run: |
-        printenv
-    - name: Debug Info
-      run: |
-        echo "Current directory: $PWD"
-        echo "Contents of the 'lib' directory:"
-        ls -R lib
-        echo "Contents of the 'include' directory:"
-        ls -R include
-    - name: Install Clang 14.0.0
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y clang-14
-    - name: Display Clang++ Version
-      run: |
-        clang++-14 --version
-    - name: Install SDL2, SDL2_image, and SDL2_ttf
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
-    - name: Build and run tests
-      env:
-        LD_LIBRARY_PATH: ${{ github.workspace }}/
-      run: |
-        make autotest
+        mkdir build
+        cd build
+        cmake -DSDL2_LIBRARY=../lib/libSDL2.dylib -DSDL2_TTF_LIBRARY=../lib/libSDL2_ttf.dylib -DSDL2_IMAGE_LIBRARY=../lib/libSDL2_image.dylib ..
+        make
         ./run_tests
