@@ -1,1 +1,1 @@
-So apparently I need a bin folder or else CMake files freak out
+So apparently I need a bin folder or else CMake files freak out help me please
