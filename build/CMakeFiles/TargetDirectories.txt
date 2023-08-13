@@ -1,0 +1,4 @@
+/Users/joshualee/Code/C++/Games/FirstSDL2/build/CMakeFiles/play.dir
+/Users/joshualee/Code/C++/Games/FirstSDL2/build/CMakeFiles/run_tests.dir
+/Users/joshualee/Code/C++/Games/FirstSDL2/build/CMakeFiles/edit_cache.dir
+/Users/joshualee/Code/C++/Games/FirstSDL2/build/CMakeFiles/rebuild_cache.dir
