@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.12)
 
 project(LowLevelPong)
 
+message(STATUS "SDL2_BINDIR: ${SDL2_BINDIR}")
+
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
