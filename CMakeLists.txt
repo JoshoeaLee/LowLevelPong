@@ -24,10 +24,6 @@ target_link_libraries(play PRIVATE
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARY}
 )
-<<<<<<< HEAD
-=======
-
->>>>>>> 7bb1b57 (Changed MakeFile to a CMake)
 target_link_libraries(run_tests PRIVATE
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
