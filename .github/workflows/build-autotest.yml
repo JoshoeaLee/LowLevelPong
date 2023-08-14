@@ -2,32 +2,28 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up CMake
-      run: sudo apt-get -y install cmake
-
-    - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_PREFIX_PATH=${{github.workspace}}/lib/cmake/SDL2 -DSDL2_TTF_DIR=${{github.workspace}}/lib/cmake/SDL2_ttf
-      
-    - name: Build
-      run: cmake --build ${{github.workspace}}/build --config Release
-
-    - name: Run Tests
-      run: ${{github.workspace}}/build/run_tests
-
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-results
-        path: ${{github.workspace}}/build/test-results
+      - uses: actions/checkout@v3
+      - name: Debug Info
+        run: |
+          echo "Current directory: $PWD"
+          echo "Contents of the 'lib' directory:"
+          ls -R lib
+          echo "Contents of the 'include' directory:"
+          ls -R include
+      - name: Install SDL2, SDL2_image, and SDL2_ttf
+        run: |
+          brew update
+          brew install sdl2 sdl2_image sdl2_ttf
+      - name: Build and run tests
+        run: |
+          make autotest
+          ./run_tests
