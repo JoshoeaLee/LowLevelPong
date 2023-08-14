@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -21,9 +21,9 @@ jobs:
           ls -R include
       - name: Install SDL2, SDL2_image, and SDL2_ttf
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
+          brew update
+          brew install sdl2 sdl2_image sdl2_ttf
       - name: Build and run tests
         run: |
-          make autotest EXTRA_FLAGS=-v
+          make autotest
           ./run_tests
