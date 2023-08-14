@@ -25,5 +25,4 @@ jobs:
           brew install sdl2 sdl2_image sdl2_ttf
       - name: Build and run tests
         run: |
-          make autotest
           ./run_tests
