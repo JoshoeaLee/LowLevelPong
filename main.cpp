@@ -56,6 +56,16 @@ int main(int argc, char *argv[])
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
         SDL_RenderClear(renderer);
 
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+        for (int i = 0; i < WINDOW_HEIGHT; i++)
+        {
+            if (i % 10 == 0)
+            {
+                SDL_RenderDrawPoint(renderer, WINDOW_WIDTH / 2, i);
+            }
+        }
+
         SDL_RenderPresent(renderer);
     }
 
