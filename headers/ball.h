@@ -1,8 +1,8 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include "vec2d.h"
 #include "../include/SDL2/SDL.h"
+#include "vec2d.h"
 
 class Ball
 {
