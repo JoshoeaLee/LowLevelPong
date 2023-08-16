@@ -1,9 +1,8 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include "../headers/vec2d.h"
+#include "../headers/ball.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
@@ -31,6 +30,7 @@ int main(int argc, char *argv[])
     SDL_Init(SDL_INIT_EVERYTHING);
 
     SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
+    Ball ball(15, 15, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)));
     TTF_Init();
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
@@ -66,6 +66,8 @@ int main(int argc, char *argv[])
                 SDL_RenderDrawPoint(renderer, WINDOW_WIDTH / 2, i);
             }
         }
+
+        ball.Draw(renderer);
 
         SDL_RenderPresent(renderer);
     }
