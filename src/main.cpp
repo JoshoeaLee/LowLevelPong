@@ -3,6 +3,7 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
+#include "../headers/vec2d.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
