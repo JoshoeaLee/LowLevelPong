@@ -1,9 +1,11 @@
 #include "../include/SDL2/SDL.h"
 #include "../include/SDL2/SDL_ttf.h"
+
 #include <iostream>
 #include "../headers/vec2d.h"
 #include "../headers/ball.h"
 #include "../headers/paddle.h"
+#include "../headers/scoreboard.h"
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 700
@@ -14,6 +16,8 @@
 #define PADDLE_WIDTH BALL_SIZE
 #define PADDLE_HEIGHT BALL_SIZE * 8
 #define PADDLE_SPEED 9
+#define COLOUR \
+    SDL_Color { 255, 255, 255, 255 }
 
 SDL_Renderer *renderer;
 SDL_Window *window;
@@ -36,12 +40,18 @@ int main(int argc, char *argv[])
 
     SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
 
+    SDL_Color ColourUsed = COLOUR;
+
     Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)));
 
     Paddle leftPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(100.0f, (WINDOW_HEIGHT / 2.0f)));
     Paddle rightPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(WINDOW_WIDTH - 100.0f, (WINDOW_HEIGHT / 2.0f)));
 
+    Scoreboard leftScore(renderer, font, Vec2D(WINDOW_WIDTH / 4, 10), ColourUsed);
+    Scoreboard rightScore(renderer, font, Vec2D(3 * WINDOW_WIDTH / 4, 10), ColourUsed);
+
     running = true;
+    ;
 
     while (running)
     {
@@ -78,6 +88,9 @@ int main(int argc, char *argv[])
 
         leftPaddle.Draw(renderer);
         rightPaddle.Draw(renderer);
+
+        leftScore.Draw();
+        rightScore.Draw();
 
         SDL_RenderPresent(renderer);
     }
