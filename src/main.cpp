@@ -1,15 +1,18 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include "../include/SDL2/SDL.h"
+#include "../include/SDL2/SDL_ttf.h"
 #include <iostream>
 #include "../headers/vec2d.h"
 #include "../headers/ball.h"
+#include "../headers/paddle.h"
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 800
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 700
 #define FONT_PATH "Minecraft.ttf"
 #define FONT_SIZE 32
-#define BALLSIZE 16
+#define BALL_SIZE 15
 #define BALL_SPEED 16
+#define PADDLE_WIDTH BALL_SIZE
+#define PADDLE_HEIGHT BALL_SIZE * 8
 #define PADDLE_SPEED 9
 
 SDL_Renderer *renderer;
@@ -28,11 +31,15 @@ int frameCount, timerFPS, lastFrame, fps;
 int main(int argc, char *argv[])
 {
     SDL_Init(SDL_INIT_EVERYTHING);
-
-    SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
-    Ball ball(15, 15, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)));
     TTF_Init();
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
+
+    SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
+
+    Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)));
+
+    Paddle leftPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(100.0f, (WINDOW_HEIGHT / 2.0f)));
+    Paddle rightPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(WINDOW_WIDTH - 100.0f, (WINDOW_HEIGHT / 2.0f)));
 
     running = true;
 
@@ -68,6 +75,9 @@ int main(int argc, char *argv[])
         }
 
         ball.Draw(renderer);
+
+        leftPaddle.Draw(renderer);
+        rightPaddle.Draw(renderer);
 
         SDL_RenderPresent(renderer);
     }
