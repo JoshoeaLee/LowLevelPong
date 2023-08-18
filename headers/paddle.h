@@ -7,13 +7,15 @@
 class Paddle
 {
 public:
-    Paddle(int paddleWidth, int paddleHeight, Vec2D startingPoint);
+    Paddle(int paddleWidth, int paddleHeight, Vec2D startingPoint, Vec2D startingVelocity);
     void Draw(SDL_Renderer *renderer);
+    void Update(float timeMoved, int windowHeight);
 
 private:
     SDL_Rect paddleObject;
     int paddleWidth, paddleHeight;
     Vec2D currentPosition;
+    Vec2D currentVelocity;
 };
 
 #endif

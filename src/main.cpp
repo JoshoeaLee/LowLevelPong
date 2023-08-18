@@ -2,6 +2,7 @@
 #include "../include/SDL2/SDL_ttf.h"
 
 #include <iostream>
+#include <chrono>
 #include "../headers/vec2d.h"
 #include "../headers/ball.h"
 #include "../headers/paddle.h"
@@ -15,7 +16,7 @@
 #define BALL_SPEED 16
 #define PADDLE_WIDTH BALL_SIZE
 #define PADDLE_HEIGHT BALL_SIZE * 8
-#define PADDLE_SPEED 9
+#define PADDLE_SPEED 2.0f
 #define COLOUR \
     SDL_Color { 255, 255, 255, 255 }
 
@@ -28,6 +29,8 @@ TTF_Font *font;
 using std::cout;
 using std::endl;
 using std::string;
+using std::chrono::high_resolution_clock;
+using std::chrono::time_point;
 
 bool running;
 int frameCount, timerFPS, lastFrame, fps;
@@ -44,17 +47,19 @@ int main(int argc, char *argv[])
 
     Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)));
 
-    Paddle leftPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(100.0f, (WINDOW_HEIGHT / 2.0f)));
-    Paddle rightPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(WINDOW_WIDTH - 100.0f, (WINDOW_HEIGHT / 2.0f)));
+    Paddle leftPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(100.0f, (WINDOW_HEIGHT / 2.0f)), Vec2D(0.0f, 0.0f));
+    Paddle rightPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(WINDOW_WIDTH - 100.0f, (WINDOW_HEIGHT / 2.0f)), Vec2D(0.0f, 0.0f));
 
     Scoreboard leftScore(renderer, font, Vec2D(WINDOW_WIDTH / 4, 10), ColourUsed);
     Scoreboard rightScore(renderer, font, Vec2D(3 * WINDOW_WIDTH / 4, 10), ColourUsed);
 
     running = true;
-    ;
+    float timeMoved = 0.0f;
 
     while (running)
     {
+        time_point startMoving = high_resolution_clock::now();
+
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
@@ -93,6 +98,9 @@ int main(int argc, char *argv[])
         rightScore.Draw();
 
         SDL_RenderPresent(renderer);
+
+        time_point endMoving = high_resolution_clock::now();
+        timeMoved = std::chrono::duration<float, std::chrono::milliseconds::period>(endMoving - startMoving).count();
     }
 
     TTF_CloseFont(font);
