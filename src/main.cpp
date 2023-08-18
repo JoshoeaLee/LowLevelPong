@@ -7,8 +7,8 @@
 #include "../headers/ball.h"
 #include "../headers/paddle.h"
 #include "../headers/scoreboard.h"
-
 #include "../headers/Enums.h"
+
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 700
@@ -46,10 +46,14 @@ int main(int argc, char *argv[])
 
     SDL_Color ColourUsed = {0xFF, 0xFF, 0xFF, 0xFF};
 
+
     Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)));
 
     Paddle leftPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(100.0f, (WINDOW_HEIGHT / 2.0f)), Vec2D(0.0f, 0.0f));
     Paddle rightPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(WINDOW_WIDTH - 100.0f, (WINDOW_HEIGHT / 2.0f)), Vec2D(0.0f, 0.0f));
+
+    Scoreboard leftScore(renderer, font, Vec2D(WINDOW_WIDTH / 4, 10), ColourUsed);
+    Scoreboard rightScore(renderer, font, Vec2D(3 * WINDOW_WIDTH / 4, 10), ColourUsed);
 
     Scoreboard leftScore(renderer, font, Vec2D(WINDOW_WIDTH / 4, 10), ColourUsed);
     Scoreboard rightScore(renderer, font, Vec2D(3 * WINDOW_WIDTH / 4, 10), ColourUsed);
