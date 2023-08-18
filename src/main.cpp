@@ -8,6 +8,8 @@
 #include "../headers/paddle.h"
 #include "../headers/scoreboard.h"
 
+#include "../headers/Enums.h"
+
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 700
 #define FONT_PATH "Minecraft.ttf"
@@ -16,9 +18,7 @@
 #define BALL_SPEED 16
 #define PADDLE_WIDTH BALL_SIZE
 #define PADDLE_HEIGHT BALL_SIZE * 8
-#define PADDLE_SPEED 2.0f
-#define COLOUR \
-    SDL_Color { 255, 255, 255, 255 }
+#define PADDLE_SPEED 0.3f
 
 SDL_Renderer *renderer;
 SDL_Window *window;
@@ -29,11 +29,12 @@ TTF_Font *font;
 using std::cout;
 using std::endl;
 using std::string;
-using std::chrono::high_resolution_clock;
 using std::chrono::time_point;
+using Clock = std::chrono::high_resolution_clock;
+using TimePoint = std::chrono::time_point<Clock>;
 
 bool running;
-int frameCount, timerFPS, lastFrame, fps;
+bool buttonDown[4] = {};
 
 int main(int argc, char *argv[])
 {
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
 
     SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
 
-    SDL_Color ColourUsed = COLOUR;
+    SDL_Color ColourUsed = {0xFF, 0xFF, 0xFF, 0xFF};
 
     Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)));
 
@@ -58,22 +59,93 @@ int main(int argc, char *argv[])
 
     while (running)
     {
-        time_point startMoving = high_resolution_clock::now();
+        TimePoint startMoving = Clock::now();
 
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
             if (event.type == SDL_KEYDOWN)
             {
-                if (event.key.keysym.sym == SDLK_1)
+                switch (event.key.keysym.sym)
                 {
+                case SDLK_1:
                     running = false;
+                    break;
+
+                case SDLK_UP:
+                    buttonDown[Buttons::RightPaddleUp] = true;
+                    break;
+
+                case SDLK_DOWN:
+                    buttonDown[Buttons::RightPaddleDown] = true;
+                    break;
+
+                case SDLK_w:
+                    buttonDown[Buttons::LeftPaddleUp] = true;
+                    break;
+
+                case SDLK_s:
+                    buttonDown[Buttons::LeftPaddleDown] = true;
+                    break;
+
+                default:
+                    break;
+                }
+            }
+            else if (event.type == SDL_KEYUP)
+            {
+                switch (event.key.keysym.sym)
+                {
+                case SDLK_UP:
+                    buttonDown[Buttons::RightPaddleUp] = false;
+                    break;
+
+                case SDLK_DOWN:
+                    buttonDown[Buttons::RightPaddleDown] = false;
+                    break;
+
+                case SDLK_w:
+                    buttonDown[Buttons::LeftPaddleUp] = false;
+                    break;
+
+                case SDLK_s:
+                    buttonDown[Buttons::LeftPaddleDown] = false;
+                    break;
+
+                default:
+                    break;
                 }
             }
             else if (event.type == SDL_QUIT)
             {
                 running = false;
             }
+        }
+
+        if (buttonDown[Buttons::LeftPaddleUp])
+        {
+            leftPaddle.currentVelocity.y = -PADDLE_SPEED;
+        }
+        else if (buttonDown[Buttons::LeftPaddleDown])
+        {
+            leftPaddle.currentVelocity.y = PADDLE_SPEED;
+        }
+        else
+        {
+            leftPaddle.currentVelocity.y = 0;
+        }
+
+        if (buttonDown[Buttons::RightPaddleUp])
+        {
+            rightPaddle.currentVelocity.y = -PADDLE_SPEED;
+        }
+        else if (buttonDown[Buttons::RightPaddleDown])
+        {
+            rightPaddle.currentVelocity.y = PADDLE_SPEED;
+        }
+        else
+        {
+            rightPaddle.currentVelocity.y = 0;
         }
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
@@ -89,6 +161,9 @@ int main(int argc, char *argv[])
             }
         }
 
+        leftPaddle.Update(timeMoved, WINDOW_HEIGHT);
+        rightPaddle.Update(timeMoved, WINDOW_HEIGHT);
+
         ball.Draw(renderer);
 
         leftPaddle.Draw(renderer);
@@ -99,7 +174,7 @@ int main(int argc, char *argv[])
 
         SDL_RenderPresent(renderer);
 
-        time_point endMoving = high_resolution_clock::now();
+        TimePoint endMoving = Clock::now();
         timeMoved = std::chrono::duration<float, std::chrono::milliseconds::period>(endMoving - startMoving).count();
     }
 
