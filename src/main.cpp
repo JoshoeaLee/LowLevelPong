@@ -9,13 +9,12 @@
 #include "../headers/scoreboard.h"
 #include "../headers/Enums.h"
 
-
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 700
 #define FONT_PATH "Minecraft.ttf"
 #define FONT_SIZE 32
 #define BALL_SIZE 15
-#define BALL_SPEED 16
+#define BALL_SPEED 0.3f
 #define PADDLE_WIDTH BALL_SIZE
 #define PADDLE_HEIGHT BALL_SIZE * 8
 #define PADDLE_SPEED 0.3f
@@ -46,14 +45,10 @@ int main(int argc, char *argv[])
 
     SDL_Color ColourUsed = {0xFF, 0xFF, 0xFF, 0xFF};
 
-
-    Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)));
+    Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)), Vec2D(BALL_SPEED, -BALL_SPEED));
 
     Paddle leftPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(100.0f, (WINDOW_HEIGHT / 2.0f)), Vec2D(0.0f, 0.0f));
     Paddle rightPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(WINDOW_WIDTH - 100.0f, (WINDOW_HEIGHT / 2.0f)), Vec2D(0.0f, 0.0f));
-
-    Scoreboard leftScore(renderer, font, Vec2D(WINDOW_WIDTH / 4, 10), ColourUsed);
-    Scoreboard rightScore(renderer, font, Vec2D(3 * WINDOW_WIDTH / 4, 10), ColourUsed);
 
     Scoreboard leftScore(renderer, font, Vec2D(WINDOW_WIDTH / 4, 10), ColourUsed);
     Scoreboard rightScore(renderer, font, Vec2D(3 * WINDOW_WIDTH / 4, 10), ColourUsed);
@@ -167,6 +162,8 @@ int main(int argc, char *argv[])
 
         leftPaddle.Update(timeMoved, WINDOW_HEIGHT);
         rightPaddle.Update(timeMoved, WINDOW_HEIGHT);
+
+        ball.Update(timeMoved);
 
         ball.Draw(renderer);
 
