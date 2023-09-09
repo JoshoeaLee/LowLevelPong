@@ -11,11 +11,11 @@ public:
     void Draw(SDL_Renderer *renderer);
     void Update(float timeMoved, int windowHeight);
     Vec2D currentVelocity;
+    int paddleWidth, paddleHeight;
+    Vec2D currentPosition;
 
 private:
     SDL_Rect paddleObject;
-    int paddleWidth, paddleHeight;
-    Vec2D currentPosition;
 };
 
 #endif

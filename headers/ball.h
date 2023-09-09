@@ -11,11 +11,11 @@ public:
     void Draw(SDL_Renderer *renderer);
     void Update(float timeMoved);
     Vec2D currentVelocity;
+    int ballWidth, ballHeight;
+    Vec2D currentPosition;
 
 private:
     SDL_Rect ballObject;
-    int ballWidth, ballHeight;
-    Vec2D currentPosition;
 };
 
 #endif

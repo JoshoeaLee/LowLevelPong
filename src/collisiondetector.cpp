@@ -16,5 +16,25 @@ CollisionDetector &CollisionDetector::GetCollisionDetectorInstance()
 
 bool CollisionDetector::CheckForBallPaddleCollision(Ball const &ball, Paddle const &paddle)
 {
-    // Enter code here
+    float paddleTopPoint = paddle.currentPosition.y;
+    float paddleBottomPoint = paddle.currentPosition.y + paddle.paddleHeight;
+    float paddleLeftPoint = paddle.currentPosition.x;
+    float paddleRightPoint = paddle.currentPosition.x + paddle.paddleWidth;
+
+    float ballTopPoint = ball.currentPosition.y;
+    float ballBottomPoint = ball.currentPosition.y + ball.ballHeight;
+    float ballLeftPoint = ball.currentPosition.x;
+    float ballRightPoint = ball.currentPosition.x + ball.ballWidth;
+
+    if (ballTopPoint >= paddleBottomPoint || ballBottomPoint <= paddleTopPoint)
+    {
+        return false;
+    }
+
+    if (ballLeftPoint >= paddleRightPoint || ballRightPoint <= paddleLeftPoint)
+    {
+        return false;
+    }
+
+    return true;
 }

@@ -8,6 +8,7 @@
 #include "../headers/paddle.h"
 #include "../headers/scoreboard.h"
 #include "../headers/Enums.h"
+#include "../headers/collisiondetector.h"
 
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 700
@@ -45,13 +46,15 @@ int main(int argc, char *argv[])
 
     SDL_Color ColourUsed = {0xFF, 0xFF, 0xFF, 0xFF};
 
-    Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)), Vec2D(BALL_SPEED, -BALL_SPEED));
+    Ball ball(BALL_SIZE, BALL_SIZE, Vec2D((WINDOW_WIDTH / 2.0f), (WINDOW_HEIGHT / 2.0f)), Vec2D(BALL_SPEED, 0));
 
     Paddle leftPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(100.0f, (WINDOW_HEIGHT / 2.0f)), Vec2D(0.0f, 0.0f));
     Paddle rightPaddle(PADDLE_WIDTH, PADDLE_HEIGHT, Vec2D(WINDOW_WIDTH - 100.0f, (WINDOW_HEIGHT / 2.0f)), Vec2D(0.0f, 0.0f));
 
     Scoreboard leftScore(renderer, font, Vec2D(WINDOW_WIDTH / 4, 10), ColourUsed);
     Scoreboard rightScore(renderer, font, Vec2D(3 * WINDOW_WIDTH / 4, 10), ColourUsed);
+
+    CollisionDetector &collisionDetector = CollisionDetector::GetCollisionDetectorInstance();
 
     running = true;
     float timeMoved = 0.0f;
@@ -164,6 +167,11 @@ int main(int argc, char *argv[])
         rightPaddle.Update(timeMoved, WINDOW_HEIGHT);
 
         ball.Update(timeMoved);
+
+        if (collisionDetector.CheckForBallPaddleCollision(ball, leftPaddle) || collisionDetector.CheckForBallPaddleCollision(ball, rightPaddle))
+        {
+            ball.currentVelocity.x = -ball.currentVelocity.x;
+        }
 
         ball.Draw(renderer);
 
